@@ -1,7 +1,7 @@
 #include <janet.h>
 #include "hydrogen.h"
 
-#define CONTEXT "password"
+#define CONTEXT "cipher"
 #define OPSLIMIT 10000
 #define MEMLIMIT 0
 #define THREADS  1
@@ -48,9 +48,9 @@ static Janet verify(int32_t argc, const Janet *argv) {
 }
 
 static const JanetReg cfuns[] = {
-  {"master-key", master_key, "(password/master-key)\n\nGenerates a master key to hash and verify passwords."},
-  {"hash", hash, "(password/hash master-key plaintext-password)\n\nHashes a plaintext password with the given master key."},
-  {"verify", verify, "(password/verify master-key hashed-password plaintext-password)\n\nVerifies a plaintext password against a hashed one."},
+  {"master-key", master_key, "(cipher/master-key)\n\nGenerates a master key to hash and verify passwords."},
+  {"hash", hash, "(cipher/hash master-key plaintext-password)\n\nHashes a plaintext password with the given master key."},
+  {"verify", verify, "(cipher/verify master-key hashed-password plaintext-password)\n\nVerifies a plaintext password against a hashed one."},
   {NULL, NULL, NULL}
 };
 
