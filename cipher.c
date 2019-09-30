@@ -19,7 +19,7 @@ static Janet master_key(int32_t argc, const Janet *argv) {
   return janet_stringv((const uint8_t *)master_key, hydro_pwhash_MASTERKEYBYTES);
 }
 
-static Janet hash(int32_t argc, const Janet *argv) {
+static Janet hash_password(int32_t argc, const Janet *argv) {
   janet_fixarity(argc, 2);
 
   const uint8_t *master_key = janet_getstring(argv, 0);
@@ -47,10 +47,22 @@ static Janet verify(int32_t argc, const Janet *argv) {
   }
 }
 
+static Janet hash(int32_t argc, const Janet *argv) {
+  janet_fixarity(argc, 1);
+
+  const uint8_t *str = janet_getstring(argv, 0);
+
+  uint8_t hash[hydro_hash_BYTES];
+  hydro_hash_hash(hash, hydro_hash_BYTES, str, janet_string_length(str), CONTEXT, NULL);
+
+  return janet_stringv((const uint8_t *)hash, hydro_hash_BYTES);
+}
+
 static const JanetReg cfuns[] = {
   {"master-key", master_key, "(cipher/master-key)\n\nGenerates a master key to hash and verify passwords."},
-  {"hash", hash, "(cipher/hash master-key plaintext-password)\n\nHashes a plaintext password with the given master key."},
+  {"hash-password", hash_password, "(cipher/hash-password master-key plaintext-password)\n\nHashes a plaintext password with the given master key."},
   {"verify", verify, "(cipher/verify master-key hashed-password plaintext-password)\n\nVerifies a plaintext password against a hashed one."},
+  {"hash", hash, "(cipher/hash str)\n\nHashes a string."},
   {NULL, NULL, NULL}
 };
 
@@ -59,5 +71,5 @@ JANET_MODULE_ENTRY(JanetTable *env) {
       abort();
   }
 
-  janet_cfuns(env, "password", cfuns);
+  janet_cfuns(env, "cipher", cfuns);
 }
