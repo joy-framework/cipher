@@ -87,11 +87,11 @@ static Janet decrypt(int32_t argc, const Janet *argv) {
 
   const uint8_t *key = janet_getstring(argv, 0);
   const uint8_t *ciphertext = janet_getstring(argv, 1);
-  const uint8_t *plaintext = janet_getstring(argv, 2);
+  const int32_t len = janet_getinteger(argv, 2);
 
-  uint8_t decrypted[janet_string_length(plaintext)];
+  uint8_t decrypted[len];
   if (hydro_secretbox_decrypt(decrypted, ciphertext, janet_string_length(ciphertext), 0, CONTEXT, key) == 0) {
-    return janet_stringv((const uint8_t *)decrypted, janet_string_length(plaintext));
+    return janet_stringv(decrypted, len);
   } else {
     return janet_wrap_nil();
   }

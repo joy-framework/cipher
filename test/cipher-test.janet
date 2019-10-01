@@ -28,4 +28,4 @@
     (let [key (cipher/encryption-key)
           str "hello world"
           cipher-text (cipher/encrypt key str)]
-      (true? (= str (cipher/decrypt key cipher-text str))))))
+      (true? (= str (cipher/decrypt key cipher-text (length str)))))))
