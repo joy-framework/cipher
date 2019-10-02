@@ -28,4 +28,10 @@
     (let [key (cipher/encryption-key)
           str "hello world"
           cipher-text (cipher/encrypt key str)]
-      (true? (= str (cipher/decrypt key cipher-text (length str)))))))
+      (true? (= str (cipher/decrypt key cipher-text)))))
+
+  (test "a string is encrypted and decrypted with the same key should not be a different value"
+    (let [key (cipher/encryption-key)
+          str "testing a longer string"
+          cipher-text (cipher/encrypt key str)]
+      (false? (= "testing a longer str" (cipher/decrypt key cipher-text))))))

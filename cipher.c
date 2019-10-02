@@ -83,14 +83,15 @@ static Janet encrypt(int32_t argc, const Janet *argv) {
 }
 
 static Janet decrypt(int32_t argc, const Janet *argv) {
-  janet_fixarity(argc, 3);
+  janet_fixarity(argc, 2);
 
   const uint8_t *key = janet_getstring(argv, 0);
   const uint8_t *ciphertext = janet_getstring(argv, 1);
-  const int32_t len = janet_getinteger(argv, 2);
+  const int32_t ciphertext_len = janet_string_length(ciphertext);
+  const int32_t len = ciphertext_len - hydro_secretbox_HEADERBYTES;
 
   uint8_t decrypted[len];
-  if (hydro_secretbox_decrypt(decrypted, ciphertext, janet_string_length(ciphertext), 0, CONTEXT, key) == 0) {
+  if (hydro_secretbox_decrypt(decrypted, ciphertext, ciphertext_len, 0, CONTEXT, key) == 0) {
     return janet_stringv(decrypted, len);
   } else {
     return janet_wrap_nil();
@@ -104,7 +105,7 @@ static const JanetReg cfuns[] = {
   {"hash", hash, "(cipher/hash str)\n\nHashes a string."},
   {"encryption-key", encryption_key, "(cipher/encryption-key)\n\nGenerates a key to encrypt and decrypt strings."},
   {"encrypt", encrypt, "(cipher/encrypt key str)\n\nEncrypts a string."},
-  {"decrypt", decrypt, "(cipher/decrypt key encrypted-str plaintext-str-len)\n\nDecrypts a string with a known length"},
+  {"decrypt", decrypt, "(cipher/decrypt key encrypted-str)\n\nDecrypts an encrypted string"},
   {NULL, NULL, NULL}
 };
 
