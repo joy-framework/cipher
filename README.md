@@ -7,7 +7,7 @@ Hash passwords and encrypt strings with janet
 Add to your `project.janet` file
 
 ```clojure
-{:dependencies [{:repo "https://github.com/joy-framework/cipher" :tag ""}]}
+{:dependencies [{:repo "https://github.com/joy-framework/cipher" :tag "f859f2cb8321b3664f0a1fbb4b017e2c756efc02"}]}
 ```
 
 ## Use
