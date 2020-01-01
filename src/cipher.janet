@@ -37,7 +37,7 @@
 (defn encrypt
   "Encrypts a string with the given encryption-key"
   [encryption-key str]
-  (secretbox/encrypt str (length encryption-key) context encryption-key))
+  (string (secretbox/encrypt str (length encryption-key) context encryption-key)))
 
 
 (defn decrypt
