@@ -35,6 +35,23 @@ you call this
 
 This returns either true or false.
 
+## Encryption
+
+You can also encrypt strings!
+
+```clojure
+(let [key (cipher/encryption-key)]
+  (as-> "hello" ?
+        (cipher/encrypt key ?)
+        (cipher/decrypt key ?))) => "hello"
+```
+
+## Generic hashing
+
+```clojure
+(cipher/hash "hello") => "7fde0696c922ba4e1348dd7fa32f957531b861a93d78eef120a6c1a62fa3d2df"
+```
+
 ## Test
 
 Run `jpm test` from the project folder.
