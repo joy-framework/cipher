@@ -19,7 +19,7 @@
 
   (test "hashing a string"
     (let [str "a string"]
-      (true? (= (cipher/hash str) (cipher/hash str)))))
+       (true? (cipher/secure-compare (cipher/hash str) (cipher/hash str)))))
 
   (test "encryption key is generated"
     (false? (nil? (cipher/encryption-key))))
