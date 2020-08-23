@@ -10,13 +10,13 @@
 (defn password-key
   "Generates a new hydrogen key for hashing passwords"
   []
-  (bin2hex (pwhash/keygen)))
+  (string (bin2hex (pwhash/keygen))))
 
 
 (defn hash-password
   "Takes a password-key and a plaintext password"
   [password-key plaintext]
-  (bin2hex (pwhash/create plaintext (hex2bin password-key))))
+  (string (bin2hex (pwhash/create plaintext (hex2bin password-key)))))
 
 
 (defn verify-password
@@ -28,7 +28,7 @@
 (defn hash
   "Takes a string and creates a generic hash"
   [str]
-  (bin2hex (hash/hash hash/bytes str context)))
+  (string (bin2hex (hash/hash hash/bytes str context))))
 
 
 (defn encryption-key
@@ -36,7 +36,8 @@
   []
   (as-> (secretbox/keygen) ?
         (string ?)
-        (bin2hex ?)))
+        (bin2hex ?)
+        (string ?)))
 
 
 (defn encrypt
@@ -46,7 +47,8 @@
     (as-> str ?
           (secretbox/encrypt ? (length encryption-key) context encryption-key)
           (string ?)
-          (bin2hex ?))))
+          (bin2hex ?)
+          (string ?))))
 
 
 (defn decrypt
@@ -57,5 +59,3 @@
     (as-> cipher-text ?
           (secretbox/decrypt ? (length encryption-key) context encryption-key)
           (string ?))))
-
-
