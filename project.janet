@@ -4,7 +4,7 @@
   :author "Sean Walker"
   :license "MIT"
   :version "0.2.0"
-  :dependencies ["https://github.com/janet-lang/jhydro"]
+  :dependencies ["https://github.com/joy-framework/jhydro"]
   :url "https://github.com/joy-framework/cipher"
   :repo "git+https://github.com/joy-framework/cipher")
 
