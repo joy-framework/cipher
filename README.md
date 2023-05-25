@@ -30,7 +30,7 @@ This returns a garbled string that represents the password. Then to verify a pla
 you call this
 
 ```clojure
-(cipher/verify key hashed-password "correct horse battery staple")
+(cipher/verify-password key hashed-password "correct horse battery staple")
 ```
 
 This returns either true or false.
